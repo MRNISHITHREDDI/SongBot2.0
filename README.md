@@ -8,7 +8,7 @@
 
 
 ## Special Feature
-- Downloads Songs fastly as well as less errors as well as downtime.
+- Downloads Songs fastly and less errors as well as 0 downtime.
 
 
 ## Specila Thanks 💓
