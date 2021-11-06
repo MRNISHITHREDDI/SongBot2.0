@@ -14,3 +14,7 @@
 ## Specila Thanks 💓
 - [yt-dlp 📜](https://github.com/yt-dlp/yt-dlp)
 - [Pyrogram 🔥](https://github.com/pyrogram/pyrogram)
+
+## About Me 🙂
+- Me is new so creating small repos 🥲. 
+- And Learning 
