@@ -70,7 +70,7 @@ def song(client, message):
             return
     except Exception as e:
         m.edit(
-            "No song found named as (query)."
+            "No song found named as you Requested."
         )
         print(str(e))
         return
