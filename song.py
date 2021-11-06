@@ -1,0 +1,101 @@
+import os
+import pyrogram
+from pyrogram import Client, filters
+import yt_dlp
+from youtube_search import YoutubeSearch
+import requests
+
+
+# importing client Data from app.json
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
+API_ID = 5891777
+API_HASH = '64fa91f5fafd43a3b9dc504f0e2a4d70'
+
+bot = Client(
+        "song",
+        bot_token=BOT_TOKEN,
+	api_hash=API_HASH,
+        api_id=API_ID
+    )
+
+
+# Time 
+def time_to_seconds(time):
+    stringt = str(time)
+    return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(':'))))
+
+#start 
+@bot.on_message(filters.command('start'))
+async def start(bot, message):
+    tana = 'Hey,🤩 I am Songbot2.0\n You can use me Download Mp3 files From Youtube.For Example - /song chale ana \n\n ©️ @sillybots'
+    await message.reply(tana, quote=True)
+    return
+
+#Download
+
+@bot.on_message(filters.command(['song']))
+def song(client, message):
+    query = ''
+    for i in message.command[1:]:
+        query += ' ' + str(i)
+    print(query)
+    m = message.reply('🔍')
+    ydl_opts = {"format": "bestaudio[ext=m4a]"}
+    try:
+        results = []
+        count = 0
+        while len(results) == 0 and count < 6:
+            if count>0:
+                time.sleep(1)
+            results = YoutubeSearch(query, max_results=1).to_dict()
+            count += 1
+    
+        try:
+            link = f"https://youtube.com{results[0]['url_suffix']}"
+           
+            title = results[0]["title"]
+            thumbnail = results[0]["thumbnails"][0]
+            duration = results[0]["duration"]
+
+        
+
+            views = results[0]["views"]
+            thumb_name = f'thumb{message.message_id}.jpg'
+            thumb = requests.get(thumbnail, allow_redirects=True)
+            open(thumb_name, 'wb').write(thumb.content)
+
+        except Exception as e:
+            print(e)
+            m.edit('Found nothing. Try changing the spelling a little.')
+            return
+    except Exception as e:
+        m.edit(
+            "No song found named as {query}."
+        )
+        print(str(e))
+        return
+    m.edit("📥 Downloading.")
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=False)
+            audio_file = ydl.prepare_filename(info_dict)
+            ydl.process_info(info_dict)
+        tana = f'🎵**Title**: [{title[:35]}]({link})\n⏰\t**Duration**: `{duration}`\n👀 **Views**: `{views}`\nUploaded By @sillybots'
+        secmul, dur, dur_arr = 1, 0, duration.split(':')
+        for i in range(len(dur_arr)-1, -1, -1):
+            dur += (int(dur_arr[i]) * secmul)
+            secmul *= 60
+        message.reply_audio(audio_file, caption=tana, parse_mode='md',quote=False, title=title, duration=dur, thumb=thumb_name)
+        m.delete()
+    except Exception as e:
+        m.edit('something Went wrong! Please try again latter!')
+        print(e)
+    try:
+        os.remove(audio_file)
+        os.remove(thumb_name)
+    except Exception as e:
+        print(e)
+
+bot.run()
+print('Bhad me Jaye Janta Apana Kam banata 🙃')
+#Khatam Tata Bye bye 😀.
