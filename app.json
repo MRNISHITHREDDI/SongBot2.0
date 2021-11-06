@@ -1,0 +1,16 @@
+{
+  "name": "SongBot2.0",
+  "logo": "https://telegra.ph/file/b8e8cc69170c0833cfd0f.jpg",
+  "description": "To Get Mp3 files from Youtube.",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Enter bot token.",
+      "value": ""
+    }
+  },
+   "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ]
+}
