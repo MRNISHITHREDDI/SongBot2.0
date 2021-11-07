@@ -6,7 +6,8 @@
 ## Manditary Vars
 - BOT_TOKEN : Get It from [@Botfather](https://t.me/Botfather)
 
-
+<a href="https://t.me/sillybots"><img src="https://img.shields.io/badge/Join-Telegram%20Channel-green.svg?logo=Telegram"></a>
+<a href="https://t.me/botdevlopers"><img src="https://img.shields.io/badge/Join-Telegram%20Group-orange.svg?logo=telegram"></a>
 ## Special Feature
 - Downloads Songs fastly and less errors as well as 0 downtime.
 
